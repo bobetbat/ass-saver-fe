@@ -31,12 +31,12 @@ export const AddressForm: React.FC = () => {
   const onSubmit = async (data: IFormInput) => {
     setLoading(true);
     try {
-      await axios.post('/api/address', { address: data.address });
+      await axios.post('https://assaver.crolux.online/submit', { address: data.address });
       setLoading(false);
       setSuccessModalOpen(true);
     } catch (error) {
       setLoading(false);
-      setErrorMessage('Ups something is wrong');
+      setErrorMessage('Ups something went wrong');
       setErrorModalOpen(true);
     }
   };
