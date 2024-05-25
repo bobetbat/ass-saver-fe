@@ -1,11 +1,11 @@
-import logo from './logo.svg';
-import { Stack, Typography, Paper } from '@mui/material';
+// import logo from './logo.svg';
+import { Typography } from '@mui/material';
 import { Layout } from './components/Layout';
 import { AddressForm } from './components/AddressForm';
 
 const App = () => {
   return <Layout header footer>
-    <Typography variant='h3'>Offers</Typography>
+    <Typography variant='h5'>Add address to subscribe</Typography>
     <AddressForm />
   </Layout>
 }

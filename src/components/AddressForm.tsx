@@ -60,7 +60,7 @@ export const AddressForm: React.FC = () => {
             />
           )}
         />
-        <Button type="submit" variant="contained" color="primary" disabled={loading}>
+        <Button type="submit" variant="contained" fullWidth color="primary" disabled={loading}>
           {loading ? <CircularProgress size={24} /> : 'Submit'}
         </Button>
       </form>

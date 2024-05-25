@@ -3,7 +3,7 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import { Button, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 
 export const Header: React.FC = () => {
   return (
