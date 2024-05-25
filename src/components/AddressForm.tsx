@@ -10,8 +10,12 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Typography
+  Typography,
+  Stack
 } from '@mui/material';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAccount } from 'wagmi';
+import { StyledConnect } from './StyledConnect';
 
 interface IFormInput {
   address: string;
@@ -22,6 +26,8 @@ const isValidEthereumAddress = (value: string) => {
 };
 
 export const AddressForm: React.FC = () => {
+  const { address } = useAccount()
+
   const { control, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const [loading, setLoading] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
@@ -42,8 +48,11 @@ export const AddressForm: React.FC = () => {
   };
 
   return (
-    <div>
-      <Typography variant='h5'>Add address to subscribe</Typography>
+    <Stack alignItems="stretch" >
+      <Typography variant='h5' sx={{ py: 2 }}>Add address to subscribe</Typography>
+      {!address ? <StyledConnect /> : null}
+      {!address ? <Typography variant='h5' textAlign='center' sx={{ pt: 2 }} >OR</Typography> : null}
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="address"
@@ -59,6 +68,8 @@ export const AddressForm: React.FC = () => {
               error={!!errors.address}
               helperText={errors.address ? errors.address.message : ''}
               margin="normal"
+              value={address ?? field.value}
+              disabled={!!address || field.disabled}
             />
           )}
         />
@@ -103,7 +114,7 @@ export const AddressForm: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Stack>
   );
 };
 
