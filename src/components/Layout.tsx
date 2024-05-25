@@ -14,7 +14,7 @@ export const Layout: React.FC<Props> = ({ children, footer, header }) => {
       <main>
         {header && <Header />}
         <Stack sx={{
-          minHeight: '100vh',
+          // minHeight: '100vh',
           // width: '100vw',
           mt: '12vh',
           mb: '6vh',
