@@ -5,7 +5,6 @@ import { AddressForm } from './components/AddressForm';
 
 const App = () => {
   return <Layout header footer>
-    <Typography variant='h5'>Add address to subscribe</Typography>
     <AddressForm />
   </Layout>
 }

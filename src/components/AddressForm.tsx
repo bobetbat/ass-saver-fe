@@ -43,6 +43,7 @@ export const AddressForm: React.FC = () => {
 
   return (
     <div>
+      <Typography variant='h5'>Add address to subscribe</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="address"
@@ -54,18 +55,19 @@ export const AddressForm: React.FC = () => {
               label="Ethereum Address"
               variant="outlined"
               fullWidth
+              size='small'
               error={!!errors.address}
               helperText={errors.address ? errors.address.message : ''}
               margin="normal"
             />
           )}
         />
-        <Button type="submit" variant="contained" fullWidth color="primary" disabled={loading}>
+        <Button size='medium' type="submit" variant="contained" fullWidth color="primary" disabled={loading}>
           {loading ? <CircularProgress size={24} /> : 'Submit'}
         </Button>
       </form>
 
-      <Dialog open={loading}>
+      <Dialog fullWidth open={loading}>
         <DialogContent>
           <CircularProgress />
           <Typography variant="body2" align="center">
@@ -74,7 +76,7 @@ export const AddressForm: React.FC = () => {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={successModalOpen} onClose={() => setSuccessModalOpen(false)}>
+      <Dialog fullWidth open={successModalOpen} onClose={() => setSuccessModalOpen(false)}>
         <DialogTitle>Success</DialogTitle>
         <DialogContent>
           <Typography variant="body2">
@@ -88,7 +90,7 @@ export const AddressForm: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      <Dialog open={errorModalOpen} onClose={() => setErrorModalOpen(false)}>
+      <Dialog fullWidth open={errorModalOpen} onClose={() => setErrorModalOpen(false)}>
         <DialogTitle>Error</DialogTitle>
         <DialogContent>
           <Typography variant="body2" color="error">
