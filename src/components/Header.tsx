@@ -11,7 +11,7 @@ export const Header: React.FC = () => {
       <Box maxWidth="xl">
         <Toolbar
           disableGutters
-          sx={{ justifyContent: 'space-between', px: '1rem', py: '0.5rem' }}
+          sx={{ justifyContent: 'space-between', px: '1rem', py: '0.5rem',backgroundColor:'hsla(0,0%,100%,.65)' }}
         >
           <Stack direction='row' gap={2}>
             {/* <ConnectButton /> */}

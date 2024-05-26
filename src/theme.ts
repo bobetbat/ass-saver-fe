@@ -1,6 +1,5 @@
 import { createTheme } from '@mui/material/styles';
 
-// Colors and typography from the ETHBerlin website
 const primaryColor = '#FF5E5E'; // Example primary color from buttons
 const secondaryColor = '#000000'; // Example secondary color
 const backgroundColor = '#F5F5F5'; // Example background color
