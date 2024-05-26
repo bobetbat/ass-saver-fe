@@ -63,7 +63,7 @@ function subscribeUserToPush(registration: ServiceWorkerRegistration) {
 
 function sendSubscriptionToServer(subscription: PushSubscription) {
   // Send the subscription object to your server
-  fetch('/api/subscribe', {
+  fetch('/subscribe', {
     method: 'POST',
     body: JSON.stringify(subscription),
     headers: {
