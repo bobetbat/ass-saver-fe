@@ -61,18 +61,47 @@ export const AddressForm: React.FC = () => {
   const onSubmit = async (data: IFormInput) => {
     setLoading(true);
     try {
+      //await axios.post('https://1a6f-185-199-104-14.ngrok-free.app/submit', { address: data.address, severityLevels: data.severityLevels });
+      //await axios.post('http://localhost:4000/submit', { address: data.address, severityLevels: data.severityLevels });
       await axios.post('https://assaver.crolux.online/submit', { address: data.address, severityLevels: data.severityLevels });
+      await subscribeUserToPush();
       setLoading(false);
-      reset();
-      disconnect();
+      reset()
+      disconnect()
       setSuccessModalOpen(true);
     } catch (error) {
       setLoading(false);
-      setErrorMessage('Oops, something went wrong');
+      setErrorMessage(JSON.stringify(error));
       setErrorModalOpen(true);
     }
   };
 
+  const subscribeUserToPush = async () => {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlB64ToUint8Array('BAXeqIBWzcNGqkgsRyztAi98ssWc97xz6d5TQj9dSywqLH8Snv1zy3OMxUjgbyhxYGV-gWoFFX8N8CYgKa5r-Ok')
+      });
+      //await axios.post('https://1a6f-185-199-104-14.ngrok-free.app/subscribe', subscription);
+      //await axios.post('http://localhost:4000/subscribe', subscription);
+      await axios.post('https://assaver.crolux.online/subscribe', subscription);
+    } catch (error) {
+      console.error('Failed to subscribe to push notifications:', error);
+    }
+  };
+
+  const urlB64ToUint8Array = (base64String: string) => {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  };
+  
   return (
     <Stack alignItems="stretch">
       <Typography variant='h6' sx={{ py: 2 }}>Submit your address to subscribe for push notifications if one of the blacklisted addresses sends you tokens or any other transactions. Reload the page to add more addresses.</Typography>

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "As Saver",
+  "name": "Get notified when a malicious address interacted with your wallet",
   "icons": [
     {
       "src": "favicon.ico",
