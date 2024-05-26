@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { ethers } from 'ethers';
@@ -26,13 +26,20 @@ const isValidEthereumAddress = (value: string) => {
 };
 
 export const AddressForm: React.FC = () => {
-  const { address } = useAccount()
-
-  const { control, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+  const { address } = useAccount();
+  const { control, handleSubmit, formState: { errors }, setValue } = useForm<IFormInput>();
   const [loading, setLoading] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (address) {
+      setValue('address', address);
+    } else {
+      setValue('address', '');
+    }
+  }, [address, setValue]);
 
   const onSubmit = async (data: IFormInput) => {
     setLoading(true);
@@ -65,6 +72,7 @@ export const AddressForm: React.FC = () => {
               variant="outlined"
               fullWidth
               size='small'
+              required
               error={!!errors.address}
               helperText={errors.address ? errors.address.message : ''}
               margin="normal"
@@ -117,4 +125,3 @@ export const AddressForm: React.FC = () => {
     </Stack>
   );
 };
-
