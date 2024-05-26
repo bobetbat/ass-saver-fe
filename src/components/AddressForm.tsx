@@ -14,7 +14,7 @@ import {
   Stack,
   Autocomplete
 } from '@mui/material';
-import { useAccount } from 'wagmi';
+import { useAccount, useDisconnect } from 'wagmi';
 import { StyledConnect } from './StyledConnect';
 
 interface IFormInput {
@@ -30,7 +30,14 @@ const isValidEthereumAddress = (value: string) => {
 
 export const AddressForm: React.FC = () => {
   const { address } = useAccount();
-  const { control, handleSubmit, formState: { errors }, setValue } = useForm<IFormInput>();
+  const { disconnect } = useDisconnect()
+
+  const { control, handleSubmit, formState: { errors }, setValue, reset } = useForm<IFormInput>({
+    defaultValues: {
+      address: '',
+      severityLevels: []
+    }
+  });
   const [loading, setLoading] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -44,24 +51,33 @@ export const AddressForm: React.FC = () => {
     }
   }, [address, setValue]);
 
+  useEffect(() => {
+    return () => {
+      disconnect();
+      console.log('hello');
+    }
+  }, [disconnect]);
+
   const onSubmit = async (data: IFormInput) => {
     setLoading(true);
     try {
       await axios.post('https://assaver.crolux.online/submit', { address: data.address, severityLevels: data.severityLevels });
       setLoading(false);
+      reset();
+      disconnect();
       setSuccessModalOpen(true);
     } catch (error) {
       setLoading(false);
-      setErrorMessage('Ups something went wrong');
+      setErrorMessage('Oops, something went wrong');
       setErrorModalOpen(true);
     }
   };
 
   return (
     <Stack alignItems="stretch">
-      <Typography variant='h6' sx={{ py: 2 }}>Submit your address to subscribe for push notifications if one of the blacklisted addresses, sends you tokens or any other transactions. Reload the page to add more addresses.</Typography>
+      <Typography variant='h6' sx={{ py: 2 }}>Submit your address to subscribe for push notifications if one of the blacklisted addresses sends you tokens or any other transactions. Reload the page to add more addresses.</Typography>
       {!address ? <StyledConnect /> : null}
-      {!address ? <Typography variant='h5' textAlign='center' sx={{ pt: 2 }} >OR</Typography> : null}
+      {!address ? <Typography variant='h5' textAlign='center' sx={{ pt: 2 }}>OR</Typography> : null}
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
@@ -74,13 +90,13 @@ export const AddressForm: React.FC = () => {
               label="Ethereum Address"
               variant="outlined"
               fullWidth
-              // size='small'
               required
               error={!!errors.address}
               helperText={errors.address ? errors.address.message : ''}
               margin="normal"
-              value={address ?? field.value}
-              disabled={!!address || field.disabled}
+              value={field.value}
+              onChange={field.onChange}
+              disabled={!!address}
             />
           )}
         />
@@ -91,7 +107,6 @@ export const AddressForm: React.FC = () => {
             <Autocomplete
               {...field}
               multiple
-              // size='small'
               options={severityOptions}
               getOptionLabel={(option) => option}
               onChange={(event, value) => field.onChange(value)}
