@@ -1,21 +1,27 @@
 import '@rainbow-me/rainbowkit/styles.css';
-import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WagmiProvider } from 'wagmi';
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { config } from './wagmi';
 import { Main } from './components/Main';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import theme from './theme';
+import { ThemeProvider } from '@mui/material';
 
 const client = new QueryClient()
 
 const App = () => {
-  return <WagmiProvider config={config}>
-    <QueryClientProvider client={client}>
-      <RainbowKitProvider>
-        <Main />
-      </RainbowKitProvider>
-    </QueryClientProvider>
-  </WagmiProvider>
+  return (
+    <ThemeProvider theme={theme}>
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={client}>
+          <RainbowKitProvider>
+            <Main />
+          </RainbowKitProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </ThemeProvider>
+  )
 }
 
 export default App;

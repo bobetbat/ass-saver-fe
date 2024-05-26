@@ -11,7 +11,8 @@ import {
   DialogContent,
   DialogActions,
   Typography,
-  Stack
+  Stack,
+  Autocomplete
 } from '@mui/material';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
@@ -19,7 +20,10 @@ import { StyledConnect } from './StyledConnect';
 
 interface IFormInput {
   address: string;
+  severityLevels: string[];
 }
+
+const severityOptions = ['Low', 'Medium', 'High', 'Critical'];
 
 const isValidEthereumAddress = (value: string) => {
   return ethers.isAddress(value) || 'Invalid Ethereum address';
@@ -44,7 +48,7 @@ export const AddressForm: React.FC = () => {
   const onSubmit = async (data: IFormInput) => {
     setLoading(true);
     try {
-      await axios.post('https://assaver.crolux.online/submit', { address: data.address });
+      await axios.post('https://assaver.crolux.online/submit', { address: data.address, severityLevels: data.severityLevels });
       setLoading(false);
       setSuccessModalOpen(true);
     } catch (error) {
@@ -71,13 +75,36 @@ export const AddressForm: React.FC = () => {
               label="Ethereum Address"
               variant="outlined"
               fullWidth
-              size='small'
+              // size='small'
               required
               error={!!errors.address}
               helperText={errors.address ? errors.address.message : ''}
               margin="normal"
               value={address ?? field.value}
               disabled={!!address || field.disabled}
+            />
+          )}
+        />
+        <Controller
+          name="severityLevels"
+          control={control}
+          render={({ field }) => (
+            <Autocomplete
+              {...field}
+              multiple
+              // size='small'
+              options={severityOptions}
+              getOptionLabel={(option) => option}
+              onChange={(event, value) => field.onChange(value)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Severity Levels"
+                  variant="outlined"
+                  placeholder="Select severity levels"
+                  margin="normal"
+                />
+              )}
             />
           )}
         />

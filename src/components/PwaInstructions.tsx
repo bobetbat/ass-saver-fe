@@ -7,7 +7,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 export const PwaInstructions: React.FC = () => {
   return (
     <Box>
-      <Typography variant="h5">Save PWA to Dashboard</Typography>
+      <Typography variant="h5">Save PWA to Home screen</Typography>
       <Typography variant="body2" gutterBottom>
         Follow these steps to save this PWA to your dashboard:
       </Typography>

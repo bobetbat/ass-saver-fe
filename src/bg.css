@@ -1,0 +1,14 @@
+body::before {
+  background-color: hsla(43, 69%, 85%, .4);
+  background-image: url(/public/bg.png);
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  bottom: 0;
+  content: "";
+  left: 0;
+  opacity: .5;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
