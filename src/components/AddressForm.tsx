@@ -104,7 +104,7 @@ export const AddressForm: React.FC = () => {
   
   return (
     <Stack alignItems="stretch">
-      <Typography variant='h6' sx={{ py: 2 }}>Submit your address to subscribe for push notifications if one of the blacklisted addresses sends you tokens or any other transactions</Typography>
+      <Typography variant='h6' sx={{ py: 2 }}>Submit your address to receive push notifications if any transactions or tokens are sent from a blacklisted address</Typography>
       {!address ? <StyledConnect /> : null}
       {!address ? <Typography variant='h5' textAlign='center' sx={{ pt: 2 }}>OR</Typography> : null}
 
